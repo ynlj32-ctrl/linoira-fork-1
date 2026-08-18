@@ -150,7 +150,6 @@ function Library:CreateLabel(Properties, IsHud)
         TextColor3 = Library.FontColor;
         TextSize = 16;
         TextStrokeTransparency = 0;
-        RichText = true;
     });
 
     Library:ApplyTextStroke(_Instance);
@@ -452,8 +451,6 @@ do
             Visible = not not Info.Transparency;
             Parent = DisplayFrame;
         });
-
-
 
         -- 1/16/23
         -- Rewrote this to be placed inside the Library ScreenGui
@@ -2991,11 +2988,10 @@ function Library:CreateWindow(...)
     });
 
     local WindowLabel = Library:CreateLabel({
-        Position = UDim2.new(0, 0, 0, 0);    -- Start at left edge (not 7 pixels in)
-        Size = UDim2.new(1, 0, 0, 25);       -- Width = 100% of parent (the Inner frame)
+        Position = UDim2.new(0, 7, 0, 0);
+        Size = UDim2.new(0, 0, 0, 25);
         Text = Config.Title or '';
-        TextXAlignment = Enum.TextXAlignment.Center;  -- Center the text horizontally
-        RichText = true;                     -- (optional, enables formatting)
+        TextXAlignment = Enum.TextXAlignment.Left;
         ZIndex = 1;
         Parent = Inner;
     });
@@ -3508,7 +3504,7 @@ function Library:CreateWindow(...)
     });
 
     local TransparencyCache = {};
-    local Toggled = false;
+    getgenv().Toggled = false;
     local Fading = false;
 
     function Library:Toggle()
@@ -3518,7 +3514,7 @@ function Library:CreateWindow(...)
 
         local FadeTime = Config.MenuFadeTime;
         Fading = true;
-        Toggled = (not Toggled);
+        getgenv().Toggled = (not getgenv().Toggled);
         ModalElement.Modal = Toggled;
 
         if Toggled then
